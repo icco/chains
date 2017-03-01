@@ -24,7 +24,7 @@ loop do
   parser = Gingerice::Parser.new
   fixed = parser.parse out
 
-  p out, fixed["result"]
+  p fixed["result"]
   clean_string([fixed["result"]]).each do |s|
     chain.push s
   end
