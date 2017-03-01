@@ -4,20 +4,30 @@ require 'rubygems'
 require 'bundler'
 Bundler.require(:default)
 
+def clean_string strarr
+  strarr.map {|i| i.downcase.gsub(/[^a-z0-9\s]/i, '').strip }.reject { |c| c.empty? }
+end
+
 chain = MarkovPolo::Chain.new
 
 ["neuromancer.txt", "chamber_secrets.txt"].each do |fn|
   text = File.read(fn)
-  words = text.split(".").map {|i| i.downcase.gsub(/[^a-z0-9\s]/i, '').strip }
+  words = clean_string(text.split("."))
 
-  words.reject { |c| c.empty? }.each do |wr|
+  words.each do |wr|
     chain.push wr
   end
 end
 
-File.write("dump.json", JSON.pretty_generate(chain.to_h))
+loop do
+  out = chain.generate
+  parser = Gingerice::Parser.new
+  fixed = parser.parse out
 
-puts chain.generate
-puts chain.generate
-puts chain.generate
-puts chain.generate
+  p out, fixed["result"]
+  clean_string([fixed["result"]]).each do |s|
+    chain.push s
+  end
+  File.write("dump.json", JSON.pretty_generate(chain.to_h))
+  sleep 5
+end
