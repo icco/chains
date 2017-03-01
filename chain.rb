@@ -8,10 +8,10 @@ chain = MarkovPolo::Chain.new
 
 ["neuromancer.txt", "chamber_secrets.txt"].each do |fn|
   text = File.read(fn)
-  words = text.split(" ").map {|i| i.downcase.gsub(/[^a-z0-9\s]/i, '') }
+  words = text.split(".").map {|i| i.downcase.gsub(/[^a-z0-9\s]/i, '').strip }
 
-  words.each_slice(5) do |wr|
-    chain.push wr.join(" ")
+  words.reject { |c| c.empty? }.each do |wr|
+    chain.push wr
   end
 end
 
