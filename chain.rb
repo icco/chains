@@ -10,6 +10,10 @@ end
 
 chain = MarkovPolo::Chain.new
 
+if File.exists? "dump.json"
+  chain.load JSON.parse(File.read("dump.json"))
+end
+
 ["neuromancer.txt", "chamber_secrets.txt"].each do |fn|
   text = File.read(fn)
   words = clean_string(text.split("."))
