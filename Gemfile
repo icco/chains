@@ -11,7 +11,7 @@ gem "typhoeus"
 group :development do
   gem "bundler"
   gem "rubocop"
-  gem "shotgun"
+  gem "shotgun", ">= 0.9.2"
 end
 
 group :test do
