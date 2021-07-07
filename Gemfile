@@ -2,9 +2,9 @@ source "https://rubygems.org"
 
 ruby "2.4.0"
 
-gem "gingerice"
+gem "gingerice", ">= 1.2.2"
 gem "markov-polo"
-gem "twitter"
+gem "twitter", ">= 6.1.0"
 gem "typhoeus"
 
 # For dev
